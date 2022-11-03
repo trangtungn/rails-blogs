@@ -1,4 +1,8 @@
 {
-    "ruby.rubocop.configFilePath": "/Users/trangtungn/Working/git-repo/rails-blog/.rubocop.yml",
-    "ruby.rubocop.executePath": "/Users/trangtungn/.rbenv/shims/"
+  "ruby.rubocop.configFilePath": "/Users/trangtungn/Working/git-repo/rails-blog/.rubocop.yml",
+  "ruby.rubocop.executePath": "/Users/trangtungn/.rbenv/shims/",
+  "files.associations": {
+    "*.html.erb": "erb"
+  },
+  "vscode-erb-beautify.useBundler": true
 }
