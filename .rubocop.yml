@@ -1,0 +1,44 @@
+require:
+  - rubocop-rails
+  - rubocop-performance
+  - rubocop-rspec
+
+Rails:
+  Enabled: true
+
+##############
+# Global rules
+
+AllCops:
+  Exclude:
+    - '**/*.log'
+    - '**/*.key'
+    - '**/*.yml'
+    - '.git/**/*'
+    - 'node_modules/**/*'
+    - 'bin/**/*'
+    - 'log/**/*'
+    - 'vendor/**/*'
+    - 'tmp/**/*'
+
+  # While Rubocop has released a bunch of new cops, not all of these cops have been evaluated as
+  # part of this styleguide. To prevent new, unevaluated cops from imposing on this styleguide, we
+  # are marking these new cops as disabled. Note that as a consumer of this styleguide, you can
+  # always override any choices here by setting `Enabled: true` on any cops that you would like to
+  # have be enabled, even if we have explicitly disabled them (or if they are new and we have yet
+  # to evaluate them). For more on this configuration parameter, see
+  # https://github.com/rubocop/rubocop/blob/1e55b1aa5e4c5eaeccad5d61f08b7930ed6bc341/config/default.yml#L89-L101
+  DisabledByDefault: true
+
+inherit_from:
+  - './config/rubocop/rubocop-bundler.yml'
+  - './config/rubocop/rubocop-gemspec.yml'
+  - './config/rubocop/rubocop-layout.yml'
+  - './config/rubocop/rubocop-lint.yml'
+  - './config/rubocop/rubocop-metrics.yml'
+  - './config/rubocop/rubocop-naming.yml'
+  - './config/rubocop/rubocop-performance.yml'
+  - './config/rubocop/rubocop-rails.yml'
+  - './config/rubocop/rubocop-rspec.yml'
+  - './config/rubocop/rubocop-security.yml'
+  - './config/rubocop/rubocop-style.yml'
