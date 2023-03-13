@@ -14,5 +14,9 @@
                   turbo_method: :delete,
                   turbo_confirm: "Are you sure?"
                 } %>
+    <%= link_to "Archive Comment", archive_article_comment_path(comment.article, comment), data: {
+                  turbo_method: :put,
+                  turbo_confirm: "Are you sure?"
+                } %>
   </p>
 <% end %>
