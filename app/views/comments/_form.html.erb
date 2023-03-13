@@ -10,7 +10,8 @@
 
   <p>
     <%= form.label :status %><br>
-    <%= form.select :status, ['public', 'private', 'archived'], selected: 'public' %>
+    <% statuses = Comment.statuses.keys %>
+    <%= form.select :status, statuses, selected: statuses.first %>
   </p>
 
   <p>
