@@ -5,7 +5,7 @@ class ArticlesController < ApplicationController
   http_basic_authenticate_with name: 'dhh', password: 'secret', except: %i(index show)
 
   def index
-    @articles = Article.all
+    @articles = Article.all.includes(:comments).where(comments: { status: :active })
   end
 
   def show
