@@ -1,6 +1,8 @@
 FactoryBot.define do
-  factory :article do
-    title { Faker::Lorem.sentence }
+  factory :message do
+    account
+
+    subject { Faker::Lorem.sentence }
     body { Faker::Lorem.paragraphs(number: 1) }
     status { :active }
   end
