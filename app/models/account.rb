@@ -3,4 +3,5 @@ class Account < ApplicationRecord
 
   validates :email, presence: true
   validates :username, presence: true
+  validates :status, presence: true
 end
