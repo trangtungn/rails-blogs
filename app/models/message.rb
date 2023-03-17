@@ -1,3 +1,3 @@
 class Message < ApplicationRecord
-  include Visible
+  belongs_to :account
 end
