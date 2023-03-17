@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_16_173705) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_17_181736) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -18,7 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_16_173705) do
 
   create_table "accounts", force: :cascade do |t|
     t.citext "email", null: false
-    t.string "username", null: false
+    t.string "username"
     t.string "status", default: "active", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -26,43 +26,51 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_16_173705) do
   end
 
   create_table "articles", force: :cascade do |t|
-    t.string "title"
-    t.text "body"
+    t.bigint "account_id", null: false
+    t.string "title", limit: 128, null: false
+    t.text "body", null: false
+    t.string "status", limit: 16, default: "active", null: false
+    t.bigint "lock_version"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "status", default: "active"
-    t.integer "lock_version"
+    t.index ["account_id"], name: "index_articles_on_account_id"
   end
 
   create_table "comments", force: :cascade do |t|
-    t.string "commenter", null: false
-    t.text "content"
     t.bigint "article_id", null: false
+    t.bigint "account_id", null: false
+    t.text "content"
+    t.string "status", limit: 16, default: "pending", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "status", default: "pending"
+    t.index ["account_id"], name: "index_comments_on_account_id"
     t.index ["article_id"], name: "index_comments_on_article_id"
   end
 
   create_table "entries", force: :cascade do |t|
     t.bigint "account_id", null: false
-    t.string "entryalbe_type", null: false
-    t.bigint "entryalbe_id", null: false
-    t.string "status"
+    t.string "entryable_type", null: false
+    t.bigint "entryable_id", null: false
+    t.string "status", limit: 16, default: "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_entries_on_account_id"
-    t.index ["entryalbe_type", "entryalbe_id"], name: "index_entries_on_entryalbe"
+    t.index ["entryable_type", "entryable_id"], name: "index_entries_on_entryable"
   end
 
   create_table "messages", force: :cascade do |t|
-    t.string "subject", null: false
+    t.bigint "account_id", null: false
+    t.string "subject", limit: 128, null: false
     t.text "body"
-    t.string "status", default: "active"
+    t.string "status", limit: 16, default: "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_messages_on_account_id"
   end
 
+  add_foreign_key "articles", "accounts"
+  add_foreign_key "comments", "accounts"
   add_foreign_key "comments", "articles"
   add_foreign_key "entries", "accounts"
+  add_foreign_key "messages", "accounts"
 end
