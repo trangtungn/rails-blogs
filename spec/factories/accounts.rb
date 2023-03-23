@@ -7,9 +7,5 @@ FactoryBot.define do
     trait :invalid do
       email { '' }
     end
-
-    trait :invalid_status do
-      status { 'abc' }
-    end
   end
 end

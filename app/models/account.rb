@@ -9,5 +9,4 @@ class Account < ApplicationRecord
   validates :email, presence: true
   validates :username, presence: true
   validates :status, presence: true
-  validates :status, inclusion: { in: %w(active inactive), message: "%{value} is not valid" }
 end
