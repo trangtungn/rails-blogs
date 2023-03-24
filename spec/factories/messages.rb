@@ -1,9 +1,15 @@
 FactoryBot.define do
   factory :message do
-    account
-
-    subject { Faker::Lorem.sentence }
+    subject { Faker::Lorem.sentence(word_count: 5) }
     body { Faker::Lorem.paragraphs(number: 1) }
-    status { :active }
+    status { 'active' }
+
+    trait :invalid do
+      subject { '' }
+    end
+
+    trait :invalid_length do
+      subject { Faker::Lorem.characters(number: 129) }
+    end
   end
 end
