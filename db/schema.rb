@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_17_181736) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_26_171454) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -66,6 +66,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_17_181736) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_messages_on_account_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string "description", limit: 200
+    t.boolean "completed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "articles", "accounts"
