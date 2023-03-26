@@ -48,7 +48,7 @@ Things you may want to cover:
 
 # Let's Learn Ruby on Rails + Hotwire by Building a To-Do List
 
-https://www.akshaykhot.com/building-to-do-list-using-hotwire-and-stimulus/
+- This section is referenced from Akshay's Blog: https://www.akshaykhot.com/building-to-do-list-using-hotwire-and-stimulus/
 
 ## Install Tailwind CSS
 
@@ -98,3 +98,19 @@ OUTPUT:
     Rebuilding...
 
     Done in 444ms.
+
+
+## How Turbo Drive Works
+Turbo Drive intercepts all clicks on anchor links to the same domain. When you click a link or submit a form, Turbo Drive does the following:
+
+- Prevent the browser from following the link,
+- Change the browser URL using the History API,
+- Request the new page using a fetch request
+- Render the response HTML by replacing the current `<body>` element with the response and merging the `<head>` element’s content.
+
+The JavaScript `window` and `document` objects as well as the `<html>` element persist from one rendering to the next.
+
+The same goes for an HTML form. Turbo Drive converts Form submissions into fetch requests. Then it follows the redirect and renders the HTML response. As a result, your browser doesn’t have to reload, and the app feels much faster.
+
+### Cross-Site Request Forgery vulnerability and CSRF tokens
+- [Understanding Authenticity Tokens in Rails](https://www.akshaykhot.com/understanding-authenticity-tokens-in-rails/)
