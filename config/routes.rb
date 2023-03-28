@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :tasks
+  resources :tasks do
+    member do
+      post :toggle
+    end
+  end
+
   resources :articles do
     resources :comments do
       member do
@@ -12,5 +17,6 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ('/')
-  root 'articles#index'
+  # root 'articles#index'
+  root 'tasks#index'
 end
