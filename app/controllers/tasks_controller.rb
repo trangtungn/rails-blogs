@@ -1,18 +1,20 @@
 class TasksController < ApplicationController
   before_action :prepare_task, only: %i(edit update destroy toggle)
+  before_action :prepare_account, only: [:create]
+
   def index
     @tasks = Task.all
     @task = Task.new
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = @account.tasks.new(task_params)
 
     respond_to do |format|
       if @task.save
         format.html { redirect_to tasks_url, notice: "Task was successfully created" }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_entity }
       end
     end
   end
@@ -41,6 +43,10 @@ class TasksController < ApplicationController
   end
 
   private
+
+  def prepare_account
+    @account ||= Account.first
+  end
 
   def prepare_task
     @task ||= Task.find(params[:id])

@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe TasksController, type: :controller do
+  let(:account) { create(:account) }
   let(:task) { create(:task) }
   let(:description) { 'test' }
 
@@ -15,7 +16,7 @@ RSpec.describe TasksController, type: :controller do
   end
 
   describe "POST /create" do
-    before { get :create, params: { task: { description: } } }
+    before { get :create, params: { account:, task: { description: } } }
 
     it { expect(assigns(:task)).to be_persisted }
     it { expect(response).to redirect_to(tasks_url) }
