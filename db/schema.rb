@@ -26,24 +26,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_26_171454) do
   end
 
   create_table "articles", force: :cascade do |t|
-    t.bigint "account_id", null: false
     t.string "title", limit: 128, null: false
     t.text "body", null: false
     t.string "status", limit: 16, default: "active", null: false
     t.bigint "lock_version"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_articles_on_account_id"
   end
 
   create_table "comments", force: :cascade do |t|
     t.bigint "article_id", null: false
-    t.bigint "account_id", null: false
     t.text "content"
     t.string "status", limit: 16, default: "pending", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_comments_on_account_id"
     t.index ["article_id"], name: "index_comments_on_article_id"
   end
 
@@ -59,13 +55,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_26_171454) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.bigint "account_id", null: false
     t.string "subject", limit: 128, null: false
     t.text "body"
     t.string "status", limit: 16, default: "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_messages_on_account_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -75,9 +69,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_26_171454) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "articles", "accounts"
-  add_foreign_key "comments", "accounts"
   add_foreign_key "comments", "articles"
   add_foreign_key "entries", "accounts"
-  add_foreign_key "messages", "accounts"
 end

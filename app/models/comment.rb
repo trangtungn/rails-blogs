@@ -3,5 +3,8 @@ class Comment < ApplicationRecord
   include Entryable
 
   belongs_to :article
-  belongs_to :account
+
+  def title
+    content.truncate(128)
+  end
 end
