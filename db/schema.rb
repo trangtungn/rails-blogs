@@ -63,12 +63,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_26_171454) do
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.string "description", limit: 200
-    t.boolean "completed"
+    t.bigint "account_id", null: false
+    t.string "description", limit: 200, null: false
+    t.boolean "completed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_tasks_on_account_id"
   end
 
   add_foreign_key "comments", "articles"
   add_foreign_key "entries", "accounts"
+  add_foreign_key "tasks", "accounts"
 end
