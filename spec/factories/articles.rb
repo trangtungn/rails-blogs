@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :article do
-    account
-
     title { Faker::Lorem.sentence }
     body { Faker::Lorem.paragraphs(number: 1) }
     status { 'active' }
