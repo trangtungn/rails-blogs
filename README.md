@@ -45,6 +45,30 @@ Things you may want to cover:
 
     $ bin/rails generate model Entry account:references:index entryable:references{polymorphic}:index status:string{16}
 
+### Task
+
+    $ bin/rails generate model Task account:references:index description:string{200}
+
+---
+
+## Models - stkp
+
+### Admin
+
+    $ bin/rails generate model Admin display_name:string
+
+### Manager
+
+    $ bin/rails generate model Manager display_name:string
+
+### Member
+
+    $ bin/rails generate model Member display_name:string username:string domain:string timezone:string
+
+### AgentProfile
+
+    $ bin/rails generate model AgentProfile account:references:index profileable:references{polymorphic}:index active:boolean
+
 
 # Let's Learn Ruby on Rails + Hotwire by Building a To-Do List
 
