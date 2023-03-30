@@ -5,6 +5,7 @@ class Account < ApplicationRecord
   }
 
   has_many :entries
+  has_many :tasks
 
   validates :email, presence: true
   validates :username, presence: true
