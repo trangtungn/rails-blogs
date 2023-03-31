@@ -1,5 +1,10 @@
 class Entry < ApplicationRecord
+  # shared logic
+  # include Eventable, Forwardable, Redeliverable
+
   delegated_type :entryable, types: %w(Article Comment Message), dependent: :destroy
+  accepts_nested_attributes_for :entryable
+
   delegate :title, to: :entryable
   delegate :content, to: :entryable
 
