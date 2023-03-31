@@ -138,3 +138,43 @@ The same goes for an HTML form. Turbo Drive converts Form submissions into fetch
 
 ### Cross-Site Request Forgery vulnerability and CSRF tokens
 - [Understanding Authenticity Tokens in Rails](https://www.akshaykhot.com/understanding-authenticity-tokens-in-rails/)
+
+## Delegated Type
+- [ActiveRecord::DelegatedType](https://api.rubyonrails.org/classes/ActiveRecord/DelegatedType.html)
+
+- [Few extra pieces that fit nicely with the delegated types concept:](https://github.com/rails/rails/pull/39341#issuecomment-727252082)
+
+    **N+1 prevention DSL sugar**
+
+```ruby
+module Entryable
+  TYPES = %w[ List Spot ]
+end
+```
+
+```ruby
+class Entry < ApplicationRecord
+  delegated_type :entryable, types: Entryable::TYPES
+
+  scope :with_entryables, -> { includes(:entryable) }
+end
+```
+
+Automatically matching entry's url helper based on the `entryable_type`
+
+```ruby
+Rails.application.routes.draw do
+  direct :entry do |model|
+    route_for model.entryable_name, model
+  end
+end
+```
+
+```ruby
+class SpotsController < ApplicationController
+  def create
+    @entry = Entry.create! entryable: Spot.new(params.require(:spot).permit(:address))
+    redirect_to @entry # Redirects to e.g. /spots/47, with 47 being the newly created Entry id.
+  end
+end
+```
