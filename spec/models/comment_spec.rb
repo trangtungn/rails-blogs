@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Comment, type: :model do
   it { is_expected.to belong_to(:article) }
   it { is_expected.to have_one(:entry) }
+  it { is_expected.to validate_presence_of(:commenter) }
 
   it {
     is_expected.to define_enum_for(:status).
@@ -13,10 +14,11 @@ RSpec.describe Comment, type: :model do
   it { expect(build(:comment)).to be_valid }
 
   describe "#title" do
-    let(:comment) { create(:comment) }
+    let(:content) { Faker::Lorem.sentence(word_count: 130) }
+    let(:comment) { create(:comment, content:) }
 
     before { comment }
 
-    it { expect(comment.title).to eq(comment.content[..128]) }
+    it { expect(comment.title).to eq(content.truncate(128)) }
   end
 end
