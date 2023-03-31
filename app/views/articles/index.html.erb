@@ -3,10 +3,11 @@
 Our blog has <%= Article.active.count %> articles and counting!
 
 <ul>
-  <% @articles.each do |article| %>
+  <% @articles.each_with_index do |article, idx| %>
     <% unless article.archived? %>
       <li>
       <% if article.active? %>
+        <%= article.id %>.
         <%= link_to article.title, article %>
       <% else %>
         <%= article.title %>

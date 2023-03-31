@@ -4,6 +4,10 @@ FactoryBot.define do
     username { Faker::Internet.username }
     status { 'active' }
 
+    trait :signin do
+      username { Account.default_username }
+    end
+
     trait :invalid do
       email { '' }
     end

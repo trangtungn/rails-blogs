@@ -2,37 +2,35 @@
 
 # articles controller
 class ArticlesController < ApplicationController
-  http_basic_authenticate_with name: 'dhh', password: 'secret', except: %i(index show)
+  before_action :prepare_account
+  before_action :prepare_article, only: %i(show edit update destroy)
 
   def index
-    @articles = Article.all.includes(:comments).where(comments: { status: :active })
+    @articles = Article.where(
+      id: Entry.articles.pluck(:entryable_id)
+    ).includes(:comments)
   end
 
-  def show
-    @article = Article.find(params[:id])
-  end
+  def show; end
 
   def new
     @article = Article.new
   end
 
   def create
-    @article = Article.new(article_params)
+    @entry = Entry.create!(entryable: Article.new(article_params), account: @account)
 
-    if @article.save
-      redirect_to @article
+    if @entry.save
+
+      redirect_to @entry # `direct :entry` in `routes.rb`
     else
       render :new, status: :unprocessable_entity
     end
   end
 
-  def edit
-    @article = Article.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @article = Article.find(params[:id])
-
     if @article.update(article_params)
       redirect_to @article
     else
@@ -41,13 +39,16 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find(params[:id])
     @article.destroy
 
     redirect_to root_path, status: :see_other
   end
 
   private
+
+  def prepare_article
+    @article ||= Article.where(id: @account.entries.articles.pluck(:entryable_id)).find(params[:id])
+  end
 
   def article_params
     params.require(:article).permit(:title, :body, :status)

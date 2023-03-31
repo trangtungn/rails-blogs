@@ -18,4 +18,12 @@ RSpec.describe Article, type: :model do
   it { expect(build(:article)).to be_valid }
   it { expect(build(:article, :invalid)).not_to be_valid }
   it { expect(build(:article, :invalid_length)).not_to be_valid }
+
+  describe "#content" do
+    let(:article) { create(:article) }
+
+    before { article }
+
+    it { expect(article.content).to eq(article.content) }
+  end
 end
