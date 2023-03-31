@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  # Automatically matching entry's url helper based on the `entryable`
+  # https://github.com/rails/rails/pull/39341#issuecomment-727252082
+  direct :entry do |model|
+    route_for model.entryable_name, model.entryable
+  end
+
   resources :tasks do
     member do
       post :toggle
