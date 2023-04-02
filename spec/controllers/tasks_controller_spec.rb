@@ -2,13 +2,18 @@ require 'rails_helper'
 
 RSpec.describe TasksController, type: :controller do
   let(:account) { create(:account) }
-  let(:task) { create(:task) }
+  let(:task) { create(:task, account:) }
   let(:description) { 'test' }
 
-  before { task }
+  before do
+    http_login
+    task
+  end
 
   describe "GET /index" do
-    before { get :index }
+    before do
+      get :index
+    end
 
     it { expect(assigns(:tasks)).to eq([task]) }
     it { expect(assigns(:task)).to be_new_record }
