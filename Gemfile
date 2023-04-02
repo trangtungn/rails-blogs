@@ -50,6 +50,7 @@ gem 'bootsnap', require: false
 # gem 'image_processing', '~> 1.2'
 
 gem "tailwindcss-rails", "~> 2.0"
+gem "simple_form", "~> 5.1.0"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -80,6 +81,6 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
   gem 'selenium-webdriver'
-  gem 'webdrivers'
+  gem 'webdrivers', "~> 5.2.0"
   gem "rails-controller-testing", "~> 1.0"
 end
