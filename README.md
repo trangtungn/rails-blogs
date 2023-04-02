@@ -178,3 +178,51 @@ class SpotsController < ApplicationController
   end
 end
 ```
+
+## Http Basic Authentication
+
+```ruby
+class ApplicationController < ActionController::Base
+  http_basic_authenticate_with name: 'user', password: 'pass'
+```
+
+### Config RSpec
+
+```ruby
+# spec/support/basic_auth.rb
+
+module BasicAuth
+  def http_login
+    request.env['HTTP_AUTHORIZATION'] =
+      ActionController::HttpAuthentication::Basic.encode_credentials('user', 'pass')
+  end
+end
+```
+
+```ruby
+# spec/spec_helper.rb
+
+require_relative 'support/basic_auth'
+
+RSpec.configure do |config|
+    ...
+    config.include BasicAuth, :type => :controller
+    ...
+end
+```
+
+Usage:
+
+```ruby
+# spec/controllers/tasks_controllers.rb
+
+RSpec.describe TasksController, type: :controller do
+
+    describe "GET /index" do
+        before do
+            http_login
+            get :index
+        end
+
+        ...
+```
