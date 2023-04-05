@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_26_171454) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_30_184202) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -25,6 +25,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_26_171454) do
     t.index ["email"], name: "index_accounts_on_email"
   end
 
+  create_table "admins", force: :cascade do |t|
+    t.string "display_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "agent_profiles", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "profileable_type", null: false
+    t.bigint "profileable_id", null: false
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_agent_profiles_on_account_id"
+    t.index ["profileable_type", "profileable_id"], name: "index_agent_profiles_on_profileable"
+  end
+
   create_table "articles", force: :cascade do |t|
     t.string "title", limit: 128, null: false
     t.text "body", null: false
@@ -36,6 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_26_171454) do
 
   create_table "comments", force: :cascade do |t|
     t.bigint "article_id", null: false
+    t.string "commenter", null: false
     t.text "content"
     t.string "status", limit: 16, default: "pending", null: false
     t.datetime "created_at", null: false
@@ -52,6 +70,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_26_171454) do
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_entries_on_account_id"
     t.index ["entryable_type", "entryable_id"], name: "index_entries_on_entryable"
+  end
+
+  create_table "managers", force: :cascade do |t|
+    t.string "display_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "members", force: :cascade do |t|
+    t.string "display_name"
+    t.string "username"
+    t.string "domain"
+    t.string "timezone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "messages", force: :cascade do |t|
@@ -71,6 +104,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_26_171454) do
     t.index ["account_id"], name: "index_tasks_on_account_id"
   end
 
+  add_foreign_key "agent_profiles", "accounts"
   add_foreign_key "comments", "articles"
   add_foreign_key "entries", "accounts"
   add_foreign_key "tasks", "accounts"
