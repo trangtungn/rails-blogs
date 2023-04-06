@@ -4,6 +4,9 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all
+  end
+
+  def new
     @task = Task.new
   end
 
@@ -34,7 +37,10 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    redirect_to tasks_url, notice: "Post was successfully deleted."
+    respond_to do |format|
+      format.html { redirect_to tasks_url, notice: "Task was successfully deleted." }
+      format.turbo_stream
+    end
   end
 
   def toggle
